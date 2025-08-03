@@ -22,6 +22,7 @@
 #include <QColor>
 #include <QVariant>
 #include <QList>
+#include <QRecursiveMutex>
 #include <vector>
 #include <utility>
 #include "pixytypes.h"
@@ -66,7 +67,7 @@ struct Command
     }
 
     // need to implement this for QList::removeAll()
-    bool operator==(const Command &rhs)
+    bool operator==(const Command &rhs) const
     {
         return m_type==rhs.m_type;
     }
@@ -206,7 +207,8 @@ private:
     USBLink m_link;
 
     // for thread
-    QMutex m_mutexProg;
+    //QMutex m_mutexProg;
+    QRecursiveMutex m_mutexProg;
     QMutex m_mutexInput;
     QMutex m_mutexQueue;
     QWaitCondition m_waitInput;

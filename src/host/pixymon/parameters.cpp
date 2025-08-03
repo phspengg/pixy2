@@ -245,7 +245,8 @@ QVariant Parameter::property(const QString &label) const
 }
 
 
-ParameterDB::ParameterDB() : m_mutex(QMutex::Recursive)
+//ParameterDB::ParameterDB() : m_mutex(QMutex::Recursive)
+ParameterDB::ParameterDB()
 {
 }
 
@@ -366,6 +367,7 @@ bool compParameter(const Parameter &a, const Parameter &b)
 void ParameterDB::sort()
 {
     QMutexLocker locker(&m_mutex);
-    qSort(m_parameters.begin(), m_parameters.end(), compParameter);
+    //qSort(m_parameters.begin(), m_parameters.end(), compParameter);
+    std::sort(m_parameters.begin(), m_parameters.end(), compParameter);
 }
 

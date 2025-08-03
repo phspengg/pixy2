@@ -1,5 +1,6 @@
 #include <QDebug>
 #include <QPainter>
+#include <QRegularExpression>
 #include <stdio.h>
 #include <math.h>
 #include "linemodule.h"
@@ -419,7 +420,7 @@ void LineModule::handlePVI0(uint8_t renderFlags, uint16_t width, uint16_t height
 
         if (intersectionDest)
         {
-            label.sprintf("%d-way intersection", intersectionDest);
+            label.asprintf("%d-way intersection", intersectionDest);
             drawPoint(0, pDest.x(), pDest.y(), label);
         }
     }
@@ -450,11 +451,11 @@ void LineModule::paramChange()
     {
         if (params[i].id().startsWith("Barcode label"))
         {
-            words = params[i].id().split(QRegExp("\\s+"));
+            words = params[i].id().split(QRegularExpression("\\s+"));
             if (words.length()<3) // bogus!
                 continue;
             barcodeNum = words[2].toUInt();
-            m_labels.push_back(QPair<uint16_t, QString>(barcodeNum, params[i].value().toString().remove(QRegExp("^\\s+")))); // remove leading whitespace
+            m_labels.push_back(QPair<uint16_t, QString>(barcodeNum, params[i].value().toString().remove(QRegularExpression("^\\s+")))); // remove leading whitespace
         }
     }
 }
